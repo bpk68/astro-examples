@@ -1,0 +1,60 @@
+---
+import client from '../lib/apollo-client';
+import gql from 'graphql-tag';
+
+// Styles
+import '../styles/main.css';
+
+// Components
+import CartRow from '../components/CartRow.astro';
+
+import type { CartItem } from '../data/types';
+
+const { data, loading } = await client.query({
+  query: gql`
+    query ShoppingCart {
+      cart {
+        name
+        price
+        qty
+      }
+    }
+  `,
+});
+
+const cartItems: Array<CartItem> = data.cart;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro and Graphql</title>
+  </head>
+  <body>
+    <h1>Welcome to the shopping cart</h1>
+    <p>Here's what's in your shopping cart today:</p>
+
+    {loading && <p>Loading your cart...</p>}
+		
+    {
+      !loading && (
+        <table>
+					<thead>
+						<tr>
+							<th>Product name</th>
+							<th>Quantity</th>
+							<th>Item price</th>
+							<th>Row total</th>
+						</tr>
+					</thead>
+					<tbody>
+          	{cartItems.map((item) => <CartRow item={item} />)}
+					</tbody>
+        </table>
+      )
+    }
+  </body>
+</html>

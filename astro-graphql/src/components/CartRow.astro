@@ -1,0 +1,16 @@
+---
+import type { CartItem } from '../data/types';
+
+interface Props {
+  item: CartItem;
+}
+
+const { item } = Astro.props;
+---
+
+<tr>
+  <td>{item.name}</td>
+  <td>{item.qty}</td>
+  <td>£{item.price}</td>
+  <td><strong>£{(item.price * item.qty).toFixed(2)}</strong></td>
+</tr>
