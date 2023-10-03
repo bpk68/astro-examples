@@ -1,14 +1,10 @@
-# Astro Starter Kit: Minimal
+# Astro with GraphQL
 
-```sh
-npm create astro@latest -- --template minimal
-```
+In this example repo, you get the bare bones Astro starter pack, coupled with a simple GraphQL implementation using GraphQL Yoga and Apollo Client.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+Astro is set to SSR mode to enable its API endpoint abilities, necessary to handle incoming GraphQL requests.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+For a full walkthrough and tutorial on this project, check out [this blog post](https://robkendal.co.uk/blog/how-to-build-astro-site-with-graphql/) on my website.
 
 ## 🚀 Project Structure
 
@@ -18,30 +14,28 @@ Inside of your Astro project, you'll see the following folders and files:
 /
 ├── public/
 ├── src/
+│   └── components/
+│       └── CartRow.astro
+│   └── data/
+│       └── cart.ts
+│       └── types.ts
+│   └── lib/
+│       └── apollo-client.ts
+│   └── styles/
+│       └── main.css
 │   └── pages/
 │       └── index.astro
+│     └── api/
+│         └── graphql.ts
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name. This project just has the one page, a homepage, located at `/pages/index.astro`.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+There's nothing special about `src/components/`, but that's where you can put any Astro/React/Vue/Svelte/Preact components.
 
-Any static assets, like images, can be placed in the `public/` directory.
+The `src/data` directory holds some types and dummy data we can use with GraphQL.
 
-## 🧞 Commands
+In `src/lib` there's a really simple implemenation of Apollo Client, used to physically call our GraphQL endpoint.
 
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+With the `/src/pages/api/graphql.ts` file, this is where the GraphQL action happens. It uses GraphQL Yoga to create a schema, and defines a `POST` endpoint to handle incoming API requests.
